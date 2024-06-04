@@ -1,0 +1,181 @@
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+
+
+<script>
+    $(document).ready(function(){
+       
+       var data_id = $('#user_id').val();
+       if (data_id!=''){
+        
+        populateMyData(data_id);
+       }
+     
+               
+    })
+</script>
+<script>
+function signUpCalling(){
+    
+    var firstname =  $("#firstname").val();
+    var lastname =  $("#lastname").val();
+    var email = $("#email").val();
+    var phone = $("#phone").val();
+    var password = $("#password").val();
+    var gender = $("#gender").val();
+    var city = $("#city").val();
+   
+    var new_form_sign = new FormData($("#signup-form")[0])
+
+    if(firstname==""){
+        alert("Please Enter firstname");
+        return false
+    }
+    else if(lastname==""){
+        alert("Please Enter lastname");
+        return false
+    }
+    else if (email==""){
+        alert("Please Enter email");
+        return false
+    }
+    else if(phone==""){
+        alert("Please Enter phone");
+        return false
+    }
+    else if(password==""){
+        alert("Please Enter password");
+        return false
+    }
+    else if(gender==""){
+        alert("Please Enter gender");
+        return false
+    }
+    else if(city ==""){
+        alert("Please Enter city");
+        return false
+    }
+    $.ajax({
+        url:"/apis/user_data",
+        type:"post",
+        csrftoken: '{{ csrf_token }}',
+        async:false,
+        contentType:false,
+        cache:false,
+        processData:false, 
+        data:new_form_sign,
+        success: function(response){
+            if(response.STATUS=="SUCCESS"){
+                document.getElementById("signup-form").reset();
+                alert(response.MESSAGE)
+                return true
+            }
+            else{
+                toastr.error(response.MESSAGE)
+                return false
+            }
+            
+        }
+
+    })
+        }
+</script>
+<script>
+    function updateCalling(){
+        
+        var firstname =  $("#firstname").val();
+        var lastname =  $("#lastname").val();
+        var email = $("#email").val();
+        var phone = $("#phone").val();
+        var password = $("#password").val();
+        var gender = $("#gender").val();
+        var city = $("#city").val();
+       
+        var new_form_update = new FormData($("#signup-form")[0])
+    
+        if(firstname==""){
+            alert("Please Enter firstname");
+            return false
+        }
+        else if(lastname==""){
+            alert("Please Enter lastname");
+            return false
+        }
+        else if (email==""){
+            alert("Please Enter email");
+            return false
+        }
+        else if(phone==""){
+            alert("Please Enter phone");
+            return false
+        }
+        else if(password==""){
+            alert("Please Enter password");
+            return false
+        }
+        else if(gender==""){
+            alert("Please Enter gender");
+            return false
+        }
+        else if(city ==""){
+            alert("Please Enter city");
+            return false
+        }
+        $.ajax({
+            url:"/apis/user_update",
+            type:"post",
+            csrftoken: '{{ csrf_token }}',
+            async:false,
+            contentType:false,
+            cache:false,
+            processData:false, 
+            data:new_form_update,
+            success: function(response){
+                if(response.STATUS=="SUCCESS"){
+                    document.getElementById("#signup-form").reset();
+                    alert(response.MESSAGE)
+                    return true
+                }
+                else{
+                    toastr.error(response.MESSAGE)
+                    return false
+                }
+                
+            }
+    
+        })
+            }
+    </script>
+    <script>
+        function populateMyData(id){
+            
+        $.ajax({
+            url:"/apis/dataview",
+            type:"post",
+            csrftoken: '{{ csrf_token }}',
+            // async:false,
+            // contentType:false,
+            // cache:false,
+            // processData:false,
+            data:{'user_id':id},
+            success: function(response){
+                alert(response.DATA)
+                alert(response.STATUS)
+                if(response.STATUS=="SUCCESS"){
+                    var dt = response.DATA;
+                   
+                    $('#firstname').val(dt.firstname);
+                    $('#lastname').val(dt.lastname);
+                    $('#email').val(dt.email);
+                    $('#phone').val(dt.phone);
+                    $('#password').val(dt.password);
+                    $('#gender').val(dt.gender);
+                    $('#city').val(dt.city);
+                }
+                else{
+                    alert("Somthin went wrong")
+                }   
+            }
+        })
+    }
+
+    </script>

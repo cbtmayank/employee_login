@@ -1,0 +1,41 @@
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+
+
+<script>
+   
+  
+    function callForget(){
+  
+        let email = $("#email").val()
+        var form_data_forget = new FormData($("#email-for-otp")[0]);
+        if (email==""){
+              alert("Enter email")
+              return false;
+          }
+    
+        
+    $.ajax({
+              url: "/apis/forget_password",
+              method: 'post',
+              csrftoken: '{{ csrf_token }}',
+              async: false,
+              cache: false,
+              contentType: false,
+              processData: false,
+              data: form_data_forget,
+              success: function(response){
+                if (response.STATUS == 'SUCCESS'){
+                    alert("OTP sent successfully")
+                    var redirectUrl = "/user-page/changePassword";
+                    window.location.href = redirectUrl;
+                    return true;
+                  }
+                  
+                else if(response.STATUS == 'FAILURE'){
+                  toastr.error(response.MESSAGE);
+                  return false;
+                  }
+              }
+          });
+        }
+  </script>

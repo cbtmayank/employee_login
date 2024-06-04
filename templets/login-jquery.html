@@ -1,0 +1,48 @@
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+
+
+<script>
+function loginCalling(){
+    
+    var email = $("#email").val();
+    var password = $("#password").val();
+
+    var new_form = new FormData($("#login-form")[0])
+
+    if (email==""){
+        alert("Please Enter name");
+        return false
+    }
+    else if(password==""){
+        alert("Please Enter password");
+        return false
+    }
+    $.ajax({
+        url:"/apis/user_login",
+        type:"post",
+        csrftoken: '{{ csrf_token }}',
+        async:false,
+        contentType:false,
+        cache:false,
+        processData:false, 
+        data:new_form,
+        success: function(response){
+            if(response.STATUS=="SUCCESS"){
+                document.getElementById("login-form").reset();
+                alert(response.MESSAGE)
+                var data_id = response.DATA.user_id;
+                
+                var redirectUrl = "/user-page/view-call/"+data_id;
+                window.location.href = redirectUrl;
+                
+                return true
+            }
+            else{
+                alert("Wrong credentials")
+                return false
+            }
+        }
+
+    })
+        }
+</script>

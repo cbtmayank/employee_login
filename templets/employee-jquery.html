@@ -1,0 +1,159 @@
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+
+<script>
+    $(document).ready(function(){
+        var data_id = $('#user_id1').val();
+            if (data_id!=''){
+                userData(data_id);
+       }          
+    })
+</script>
+
+<script>
+
+function employeeUpdateCall(){
+    var user_id = $("#user_id").val();
+    var firstname =  $("#firstname").val();
+    var lastname =  $("#lastname").val();
+    var email = $("#email").val();
+    var phone = $("#phone").val();   
+    var new_form_update = new FormData($("#update-form-model")[0])
+    
+    if(firstname==""){
+        alert("Please Enter firstname");
+        return false
+    }
+    
+    else if (email==""){
+        alert("Please Enter email");
+        return false
+    }
+    else if(phone==""){
+        alert("Please Enter phone");
+        return false
+    }
+    
+    $.ajax({
+        url:"/apis/user_update",
+        type:"post",
+        csrftoken: '{{ csrf_token }}',
+        async:false,
+        contentType:false,
+        cache:false,
+        processData:false, 
+        data:new_form_update,
+        success: function(response){
+                alert(response.STATUS)
+                alert(response.MESSAGE)
+                if(response.STATUS=="SUCCESS"){
+                    document.getElementById("#update-form-model").reset();
+                    alert(response.MESSAGE)
+                    return true
+                }
+                else{
+                    alert("Somthing went wrong")
+                    return false
+                }
+                
+            }
+    
+        })
+            }
+
+</script>
+
+<script>
+     function populateMyData(id){
+           
+            $.ajax({
+                url:"/apis/dataview",
+                type:"post",
+                csrftoken: '{{ csrf_token }}',
+                // async:false,
+                // contentType:false,
+                // cache:false,
+                // processData:false,
+                data:{'user_id':id},
+                success: function(response){
+                   
+                    if(response.STATUS=="SUCCESS"){
+                        var dt = response.DATA;
+                        $('#user_id').val(dt.user_id)
+                        $('#firstname').val(dt.firstname);
+                        $('#lastname').val(dt.lastname);
+                        $('#email').val(dt.email);
+                        $('#phone').val(dt.phone);
+                        // $('#password').val(dt.password);
+                        // $('#gender').val(dt.gender);
+                        // $('#city').val(dt.city);
+                    }
+                    else{
+                        alert("Somthin went wrong")
+                    }   
+                }
+            })
+        }
+    
+</script>
+
+<script>
+    function userData(id){
+        
+        $.ajax({
+                url:"/apis/dataview",
+                type:"post",
+                csrftoken: '{{ csrf_token }}',
+                // async:false,
+                // contentType:false,
+                // cache:false,
+                // processData:false,
+                data:{'user_id':id},
+                success: function(response){
+
+                   
+                    if(response.STATUS=="SUCCESS"){
+                        var dt = response.DATA;
+                        $('#user_id1').val(dt.user_id)
+                        $('#emp_data_name').html('<h2 value="'+dt.firstname +'">'+dt.firstname +'</h2>');
+                        // $('#lastname').val(dt.lastname);
+                        $('#emp_data').html('<p value="'+dt.email +'">'+dt.email +'</p>');
+                        // $('#phone').val(dt.phone);
+                        // $('#password').val(dt.password);
+                        // $('#gender').val(dt.gender);
+                        // $('#city').val(dt.city);
+                    }
+                    else{
+                        alert("Somthin went wrong")
+                    }   
+                }
+            })
+        }
+</script>
+<script>
+    function userDelete(id){
+        
+        $.ajax({
+                url:"/apis/delete_user",
+                type:"post",
+                csrftoken: '{{ csrf_token }}',
+                // async:false,
+                // contentType:false,
+                // cache:false,
+                // processData:false,
+                data:{'user_id':id},
+                success: function(response){
+
+                    if(response.STATUS=="SUCCESS"){
+                        
+                        alert("Data deleted Successfully")
+                        
+                        location.reload();
+                    }
+                    else{
+                        alert("Somthin went wrong")
+                    }   
+                }
+            })
+        }
+</script>
+

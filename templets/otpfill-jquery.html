@@ -1,0 +1,34 @@
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+
+
+<script>
+    function callChange(){
+        var email = $("email").val();
+        var otp = $("otp").val();
+        var new_password = $("#new_password").val();
+
+        var change_new_form = new FormData($("#change-form")[0]);
+      $.ajax({
+              url: "/apis/password_change",
+              type: 'POST',
+              csrftoken: '{{ csrf_token }}',
+              async: false,
+              cache: false,
+              contentType: false,
+              processData: false,
+              data: change_new_form,
+              success: function(response){
+                if (response.STATUS == 'SUCCESS'){
+                    alert("password changed success")
+                    document.getElementById("change-form").reset()
+                    return true;
+                  }
+                else if(response.STATUS == 'FAILURE'){
+                    alert(response.MESSAGE);
+                    return false;
+                  }
+              }
+          });
+      }
+  
+  </script>

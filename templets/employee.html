@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Document</title>
+    <style>
+        .fa-2x {
+            font-size: 2em;
+                }
+        .fa {
+            position: relative;
+            display: table-cell;
+            width: 60px;
+            height: 36px;
+            text-align: center;
+            vertical-align: middle;
+            font-size:20px;
+            }
+
+
+        .main-menu:hover,nav.main-menu.expanded {
+            width:250px;
+            overflow:visible;
+            }
+
+        .main-menu {
+            background:#212121;
+            border-right:1px solid #e5e5e5;
+            position:absolute;
+            top:0;
+            bottom:0;
+            height:100%;
+            left:0;
+            width:60px;
+            overflow:hidden;
+            -webkit-transition:width .05s linear;
+            transition:width .05s linear;
+            -webkit-transform:translateZ(0) scale(1,1);
+            z-index:1000;
+            position: fixed;
+            }
+
+        .main-menu>ul {
+            margin:7px 0;
+            }
+
+        .main-menu li {
+            position:relative;
+            display:block;
+            width:250px;
+            }
+
+        .main-menu li>a {
+            position:relative;
+            display:table;
+            border-collapse:collapse;
+            border-spacing:0;
+            color:#999;
+            font-family: arial;
+            font-size: 14px;
+            text-decoration:none;
+            -webkit-transform:translateZ(0) scale(1,1);
+            -webkit-transition:all .1s linear;
+            transition:all .1s linear;
+            
+            }
+
+        .main-menu .nav-icon {
+            position:relative;
+            display:table-cell;
+            width:60px;
+            height:36px;
+            text-align:center;
+            vertical-align:middle;
+            font-size:18px;
+            }
+
+        .main-menu .nav-text {
+            position:relative;
+            display:table-cell;
+            vertical-align:middle;
+            width:190px;
+            font-family: 'Titillium Web', sans-serif;
+            }
+
+        .main-menu>ul.logout {
+            position:absolute;
+            left:0;
+            bottom:0;
+            }
+
+        .no-touch .scrollable.hover {
+            overflow-y:hidden;
+            }
+
+        .no-touch .scrollable.hover:hover {
+            overflow-y:auto;
+            overflow:visible;
+            }
+
+        a:hover,a:focus {
+            text-decoration:none;
+            }
+
+        nav {
+            -webkit-user-select:none;
+            -moz-user-select:none;
+            -ms-user-select:none;
+            -o-user-select:none;
+            user-select:none;
+            }
+
+        nav ul,nav li {
+            outline:0;
+            margin:0;
+            padding:0;
+            }
+        .main-menu li:hover>a,nav.main-menu li.active>a,.dropdown-menu>li>a:hover,.dropdown-menu>li>a:focus,.dropdown-menu>.active>a,.dropdown-menu>.active>a:hover,.dropdown-menu>.active>a:focus,.no-touch .dashboard-page nav.dashboard-menu ul li:hover a,.dashboard-page nav.dashboard-menu ul li.active a {
+            color:#fff;
+            background-color:#000000;
+            }
+        .area {
+            float: left;
+            background: #e2e2e2;
+            width: 100%;
+            height: 100%;
+            }
+            @font-face {
+            font-family: 'Titillium Web';
+            font-style: normal;
+            font-weight: 300;
+            src: local('Titillium WebLight'), local('TitilliumWeb-Light'), url(http://themes.googleusercontent.com/static/fonts/titilliumweb/v2/anMUvcNT0H1YN4FII8wpr24bNCNEoFTpS2BTjF6FB5E.woff) format('woff');
+            }
+
+        .content{
+            margin-left: 65px; 
+            }
+    </style>
+</head>
+<body>
+    <div class="area"></div><nav class="main-menu">
+        <ul>
+            <!-- <li>
+                <a href="#">
+                    <i class="fa fa-home fa-2x"></i>
+                    <span class="nav-text">
+                       Home
+                    </span>
+                </a>
+            </li> -->
+            <li>
+                <a href="#">
+                   <i class="fa fa-info fa-2x"></i>
+                    <span class="nav-text">
+                        Employee
+                    </span>
+                </a>
+            </li>
+        </ul>
+        <!-- <li>
+            <a href="">
+                <i class="fa fa-home fa-2x"></i>
+                <span class="nav-text">
+                   Performance
+                </span>
+            </a>
+        </li> -->
+        
+        
+        <ul class="logout">
+             {% if user.is_authenticated%} 
+            <li>
+               <a href="singout">
+                     <i class="fa fa-power-off fa-2x"></i>
+                    <span class="nav-text">
+                        Logout
+                    </span>
+                </a>
+
+            </li>  
+            {% endif %} 
+
+
+        </ul>
+    </nav>
+        
+    <div class="container mt-3">
+        {%csrf_token%}
+        {%block content%}
+       <form method="post" id="login_id">
+        <input type="hidden" id="user_id1" name="user_id1" value="{{data_id}}">
+       </form>
+        <div id="emp_data_name">
+
+        </div>
+        <div id="emp_data">
+
+        </div>
+        <div class="row">
+        
+        </div>
+        </div>
+
+        <!-- list data here -->
+        <section>
+            
+            <table style="width:60%; margin-left:160px;">
+                <tr>
+                  <th>S. No.</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Action</th>
+
+                </tr>
+                {% for x in data_obj%}
+                <tr>
+                  <td>{{x.user_id}}</td>
+                  <td>{{x.firstname}}</td>
+                  <td>{{x.email}}</td>
+                  <td>{{x.phone}}</td>
+                  <td>
+                    <button type="button" class="btn btn-primary" onclick="userDelete({{x.user_id}});">Delete</button>
+                    <button type="button" id="update-btn" class="btn btn-primary" data-bs-toggle="modal"  data-bs-target="#myModal" onclick="populateMyData({{x.user_id}});">Update</button>
+                  </td>
+
+
+                </tr>
+                {%endfor%}
+                
+              </table>
+<!-- Model section here -->              
+              <!-- The Modal -->
+              <div class="modal" id="myModal">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+              
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                      <h4 class="modal-title">Modal Heading</h4>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+              
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                      <form method="post" id="update-form-model">
+                        <input type="hidden" id="user_id" name="user_id">
+
+                        <label for="firstname">First Name:</label>
+                        <input type="text" id="firstname" name="firstname"><br><br>
+                        <label for="firstname">Last Name:</label>
+                        <input type="text" id="lastname" name="lastname"><br><br>
+                        <label for="email">Email:   </label>
+                        <input type="email" id="email" name="email" /><br><br>
+                        <label for="phone">Phone:   </label>
+                        <input type="number" id="phone" name="phone"/>
+
+        
+                      </form>
+                    </div>
+              
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="employeeUpdateCall();">Update</button>
+                    </div>
+              
+                  </div>
+                </div>
+              </div>
+              
+        </section>
+
+
+        
+        {%endblock content%}
+</body>
+{%include 'templets/employee-jquery.html'%}
+</html>
